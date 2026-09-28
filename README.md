@@ -16,4 +16,16 @@ npm run build
 npm run preview
 ```
 
-The current interactive Pocket model is an AGPL-3.0 Pocket Sync asset; see `ATTRIBUTION.md` before publishing.
+## License
+
+Tau Web's original source code and documentation are licensed under the MIT License; see [`LICENSE`](LICENSE). This license does not replace or extend the licenses of third-party assets and software listed below. In particular, the Pocket Sync model assets retain their upstream AGPL-3.0 terms; see [`ATTRIBUTION.md`](ATTRIBUTION.md) before redistributing or hosting them.
+
+## Credits and attribution
+
+- **Pocket Sync** — Pocket casing, controls, board model, and screen texture in `public/assets/pocket-sync/` and `public/assets/pocket-sync-board.glb`. Sourced from [Pocket Sync](https://github.com/neil-morrison44/pocket-sync); its attribution and AGPL-3.0 notice are recorded in [`ATTRIBUTION.md`](ATTRIBUTION.md).
+- **OpenGameArt audio** — the locally bundled demonstration tracks are CC0. Track titles, creators, and source pages are listed in [`ATTRIBUTION.md`](ATTRIBUTION.md).
+- **Three.js** — 3D rendering library, [MIT License](https://github.com/mrdoob/three.js).
+- **Vite** — local development server and production build tool, [MIT License](https://github.com/vitejs/vite).
+- **Google Fonts** — Space Grotesk, DM Mono, and Instrument Serif are loaded from Google Fonts; see [fonts.google.com](https://fonts.google.com/).
+
+Third-party materials retain their respective licenses. See [`ATTRIBUTION.md`](ATTRIBUTION.md) for detailed asset-level credits and notices. Tau Web's original source is not affiliated with or endorsed by the upstream projects listed here.
