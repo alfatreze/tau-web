@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="description" content="Tau Alpha technical architecture, hardware capabilities and source lineage.">
+  <title>Tau — Technical notes</title>
+  <link rel="stylesheet" href="/src/technical.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">τ<span>tau</span></a>
+    <nav aria-label="Technical page"><a href="#platform">Platform</a><a href="#talos">Talos</a><a href="#helios">Helios</a><a href="#lineage">Lineage</a></nav>
+    <a class="back" href="/">← Back to Tau</a>
+  </header>
+  <main>
+    <section class="technical-hero" aria-labelledby="technical-title">
+      <p class="eyebrow">TAU α / TECHNICAL NOTES / V0.5.0</p>
+      <h1 id="technical-title">Small hardware.<br><em>Serious care.</em></h1>
+      <p class="intro">Tau is an audio-first system for the Analogue Pocket FPGA. Playback is the protected invariant; the interface, artwork and meters are designed to work around it.</p>
+      <div class="evidence-key" aria-label="Implementation status key"><span class="confirmed">● Hardware-confirmed</span><span class="verified">◆ Simulation-verified</span><span class="planned">○ Design / roadmap</span></div>
+    </section>
+
+    <section class="system-map" aria-label="Tau system map"><span>SD card / APF</span><i>→</i><span>VexRiscv</span><i>→</i><span>Helix + FLAC</span><i>→</i><strong>PCM FIFO</strong><i>→</i><span>EQ / I²S</span><span class="map-secondary">VexRiscv <i>→</i> Helios UI framework <i>→</i> Talos <i>→</i> SDRAM framebuffer <i>→</i> 400 × 360 / 60 Hz</span></section>
+
+    <section class="section-block" id="platform" aria-labelledby="platform-title">
+      <div class="section-intro"><p class="eyebrow">01 / PLATFORM</p><h2 id="platform-title">The machine Tau runs on.</h2><p>The core targets the Pocket’s Cyclone V FPGA. A soft CPU coordinates decode and UI; dedicated hardware protects recurring audio and visual work.</p></div>
+      <div class="spec-grid">
+        <article><span>CPU</span><strong>VexRiscv</strong><p>RV32IM softcore, 60 MHz, no FPU. It runs the cooperative decoder and UI loop.</p><small>HARDWARE-CONFIRMED</small></article>
+        <article><span>VIDEO</span><strong>400 × 360</strong><p>RGB565 framebuffer in SDRAM, scanned at 60 Hz. Talos writes it without per-pixel CPU drawing.</p><small>HARDWARE-CONFIRMED</small></article>
+        <article><span>MEMORY</span><strong>256 KB + 64 MB</strong><p>On-chip RAM, 32 MB SDRAM and 32 MiB PSRAM windows for frames, art, libraries and cold code.</p><small>HARDWARE-CONFIRMED</small></article>
+        <article><span>DEVICE</span><strong>Cyclone V</strong><p>Target: 5CEBA4F23C8. System, SDRAM and video each run in their own clock domain.</p><small>HARDWARE-CONFIRMED</small></article>
+      </div>
+    </section>
+
+    <section class="section-block audio" aria-labelledby="audio-title">
+      <div class="section-intro"><p class="eyebrow">02 / AUDIO PATH</p><h2 id="audio-title">Keep the queue fed.</h2><p>The system is deliberately conservative: visuals may simplify before a PCM buffer can become late.</p></div>
+      <div class="feature-list">
+        <article><b>MP3 + FLAC</b><span>CBR/VBR MPEG-1/2 Layer III; FLAC up to 48 kHz, 8/16/20/24-bit.</span></article>
+        <article><b>Hardware MP3 window</b><span>Bit-exact synthesis-window assist with automatic software fallback.</span></article>
+        <article><b>Five biquads / channel</b><span>Eight loudness-matched EQ presets implemented in hardware.</span></article>
+        <article><b>Hardware metering</b><span>Level and spectrum measurement run from the PCM stream for live visualizers.</span></article>
+        <article><b>TIM1 covers</b><span>Pre-scaled artwork appears in about 90 ms; embedded JPEG remains the fallback.</span></article>
+      </div>
+    </section>
+
+    <section class="engine-panel" id="talos" aria-labelledby="talos-title">
+      <div class="engine-heading"><div class="mini-product"><svg class="talos-logo" viewBox="0 0 64 64" aria-hidden="true"><path d="M12 16h40v8H12zM12 29h40v8H12zM12 42h28v8H12zM45 42h7v8h-7z"/></svg><span>TALOS</span><small>2D DRAW ENGINE</small></div><h2 id="talos-title">A draw engine, not a GPU.</h2><p>Talos is a serial command-queue blitter that shares SDRAM fairly with scanout. It trades modern graphics generality for predictable, bounded work.</p></div>
+      <div class="engine-flow" aria-label="Talos command flow"><span>Firmware</span><i>01</i><span>MMIO</span><i>02</i><span>256-word FIFO</span><i>03</i><span>Talos</span><i>04</i><span>SDRAM</span></div>
+      <div class="engine-columns"><article><h3>Built primitives</h3><p>Runs, rectangles, glyphs, copies, palette blits, scaled blits, rounded rectangles and meter columns keep common UI operations compact.</p><span class="confirmed">● SHIPPED / HARDWARE-CONFIRMED</span></article><article><h3>Why it matters</h3><p>Scanline fill wins arbitration. Talos yields in burst-sized work, so visual activity does not become audio jitter.</p><span class="confirmed">● LOAD-TESTED WITH AUDIO</span></article><article><h3>Blend path</h3><p>Alpha blending has a timing-closed pipeline but is not in the shipped bitstream or firmware path yet.</p><span class="verified">◆ FIT / NOT SHIPPED</span></article></div>
+    </section>
+
+    <section class="section-block helios" id="helios" aria-labelledby="helios-title">
+      <div class="section-intro"><div class="mini-product"><svg class="helios-logo" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="9"/><path d="M32 7v9m0 32v9M7 32h9m32 0h9M14.3 14.3l6.4 6.4m22.6 22.6 6.4 6.4m0-35.4-6.4 6.4M20.7 43.3l-6.4 6.4M14 38c8 8 28 8 36 0M14 45c8 8 28 8 36 0"/></svg><span>HELIOS</span><small>UI FRAMEWORK</small></div><h2 id="helios-title">Draw at the right moment.</h2><p>Helios is Tau’s lightweight graphical UI library over Talos. Named screen regions mark themselves dirty; a single flush point turns those changes into Talos commands when the video beam makes it safe.</p></div>
+      <div class="phase-grid"><article><span>H0</span><h3>Frame timing</h3><p>Vblank and a frame counter cross safely into the system clock domain.</p><small class="confirmed">● HARDWARE-CONFIRMED</small></article><article><span>H1</span><h3>Beam-aware regions</h3><p>Meter rows can wait for safe scan positions before drawing, avoiding visible tearing.</p><small class="confirmed">● HARDWARE-CONFIRMED</small></article><article><span>H2</span><h3>Double buffer</h3><p>Pointer-swapped SDRAM framebuffers for full redraws. Built and verified in simulation; not yet fit or run on Pocket.</p><small class="verified">◆ SIMULATION-VERIFIED</small></article></div>
+    </section>
+
+    <section class="source-lineage" id="lineage" aria-labelledby="lineage-title">
+      <div><p class="eyebrow">05 / SOURCE LINEAGE</p><h2 id="lineage-title">Built in public,<br><em>with credit.</em></h2><p>Tau preserves upstream history and notices. Licensing stays with each source project.</p></div>
+      <div class="source-window" aria-label="Source projects"><div class="source-track">
+        <a href="https://github.com/harpmudd/HarpMudd.mp3player">HarpMudd MP3 Player <span>MIT / upstream base</span></a><a href="https://github.com/realnetworks/helix">Helix MP3 <span>RPSL 1.0 / decoder</span></a><a href="https://github.com/SpinalHDL/VexRiscv">VexRiscv <span>soft CPU</span></a><a href="https://github.com/SpinalHDL/SpinalHDL">SpinalHDL <span>CPU generation</span></a><a href="https://github.com/richgel999/picojpeg">picojpeg <span>JPEG fallback</span></a><a href="https://github.com/rsms/inter">Inter <span>SIL OFL / font ROM source</span></a><a href="https://www.analogue.co/developer">Analogue Pocket Framework <span>APF bridge</span></a><a href="https://github.com/alfatreze/Tau-Alpha">Tau Alpha <span>music core</span></a><a href="https://github.com/alfatreze/Tau-Omega">Tau Omega <span>desktop companion</span></a>
+        <a aria-hidden="true" href="https://github.com/harpmudd/HarpMudd.mp3player">HarpMudd MP3 Player <span>MIT / upstream base</span></a><a aria-hidden="true" href="https://github.com/realnetworks/helix">Helix MP3 <span>RPSL 1.0 / decoder</span></a><a aria-hidden="true" href="https://github.com/SpinalHDL/VexRiscv">VexRiscv <span>soft CPU</span></a><a aria-hidden="true" href="https://github.com/SpinalHDL/SpinalHDL">SpinalHDL <span>CPU generation</span></a><a aria-hidden="true" href="https://github.com/richgel999/picojpeg">picojpeg <span>JPEG fallback</span></a><a aria-hidden="true" href="https://github.com/rsms/inter">Inter <span>SIL OFL / font ROM source</span></a><a aria-hidden="true" href="https://www.analogue.co/developer">Analogue Pocket Framework <span>APF bridge</span></a><a aria-hidden="true" href="https://github.com/alfatreze/Tau-Alpha">Tau Alpha <span>music core</span></a><a aria-hidden="true" href="https://github.com/alfatreze/Tau-Omega">Tau Omega <span>desktop companion</span></a>
+      </div></div>
+      <p class="lineage-note">For full notices and licensing boundaries, see the Tau Alpha repository’s NOTICE and ATTRIBUTIONS documents.</p>
+    </section>
+  </main>
+  <footer><span>TAU α / TECHNICAL NOTES</span><span>V0.5.0 / 27 SEP 2026</span><a href="/">BACK TO TAU ↑</a></footer>
+</body>
+</html>
