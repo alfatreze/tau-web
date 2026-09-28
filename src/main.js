@@ -66,7 +66,7 @@ app.innerHTML = `
             <option value="disco">Disco motion</option>
           </select>
         </div>
-        <audio id="tau-audio" preload="metadata" src="/assets/music/empacotatron-loop.ogg"></audio>
+        <audio id="tau-audio" preload="metadata" src="./assets/music/empacotatron-loop.ogg"></audio>
         <canvas id="scope-canvas" aria-hidden="true"></canvas>
         <canvas id="pocket-canvas"></canvas>
         <p class="device-hint">Drag to turn · tap a control to try Tau</p>
@@ -90,7 +90,7 @@ app.innerHTML = `
     </section>
 
     <section class="omega-feature" id="omega" aria-labelledby="omega-title">
-      <div class="omega-image"><img src="/assets/tau-omega-card-library.png" alt="Tau Omega desktop app showing its card library, known card and player-core overview"><div class="omega-image-caption"><span>τ<sup>ω</sup></span><span>DESKTOP COMPANION / MAC + WINDOWS</span></div></div>
+      <div class="omega-image"><img src="./assets/tau-omega-card-library.png" alt="Tau Omega desktop app showing its card library, known card and player-core overview"><div class="omega-image-caption"><span>τ<sup>ω</sup></span><span>DESKTOP COMPANION / MAC + WINDOWS</span></div></div>
       <div class="omega-copy">
         <p class="eyebrow">TAU OMEGA / DESKTOP COMPANION</p>
         <h2 id="omega-title">The whole card.<br><em>In clear view.</em></h2>
@@ -107,8 +107,8 @@ app.innerHTML = `
     <section class="releases" id="releases" aria-labelledby="releases-title">
       <div class="releases-intro"><p class="eyebrow">DOWNLOADS / CURRENT BUILDS</p><h2 id="releases-title">Ready when<br><em>you are.</em></h2><p>Choose the Pocket build that fits your day, then add Tau Omega when you want the whole card in view.</p><span id="release-status" role="status">Checking GitHub for newer builds…</span></div>
       <div class="release-list">
-        <article class="release-card alpha-release"><div class="release-heading"><span>τ<sup>α</sup></span><p>FOR ANALOGUE POCKET</p></div><h3>Tau Alpha</h3><p>Music player core for Pocket. Pick the stable build, or the diagnostic companion when you need a closer look.</p><div class="release-version"><span data-alpha-version>v0.5.0</span><span>POCKET CORE</span></div><div class="release-actions"><a class="button button-primary" data-alpha-normal href="/downloads/alfatreze.TAU_0.5.0_2026-09-27.zip" download>Download normal <span>↓</span></a><a class="release-link" data-alpha-diagnostic href="/downloads/alfatreze.TAU_DIAGNOSTIC_0.5.0_2026-09-27.zip" download>Diagnostic build <span>↓</span></a></div></article>
-        <article class="release-card omega-release"><div class="release-heading"><span>τ<sup>ω</sup></span><p>FOR DESKTOP</p></div><h3>Tau Omega</h3><p>Local card companion for planning, syncing, verifying and understanding the library your Pocket will see.</p><div class="release-version"><span data-omega-version>v0.3.0</span><span>MACOS / APP ZIP</span></div><div class="release-actions"><a class="button button-outline" data-omega-download href="/downloads/tau-omega_0.3.0_macos-arm64.zip" download>Download Omega <span>↓</span></a><a class="release-link" data-omega-release href="https://github.com/alfatreze/Tau-Omega/releases" target="_blank" rel="noreferrer">All releases <span>↗</span></a></div></article>
+        <article class="release-card alpha-release"><div class="release-heading"><span>τ<sup>α</sup></span><p>FOR ANALOGUE POCKET</p></div><h3>Tau Alpha</h3><p>Music player core for Pocket. Pick the stable build, or the diagnostic companion when you need a closer look.</p><div class="release-version"><span data-alpha-version>v0.5.0</span><span>POCKET CORE</span></div><div class="release-actions"><a class="button button-primary" data-alpha-normal href="./downloads/alfatreze.TAU_0.5.0_2026-09-27.zip" download>Download normal <span>↓</span></a><a class="release-link" data-alpha-diagnostic href="./downloads/alfatreze.TAU_DIAGNOSTIC_0.5.0_2026-09-27.zip" download>Diagnostic build <span>↓</span></a></div></article>
+        <article class="release-card omega-release"><div class="release-heading"><span>τ<sup>ω</sup></span><p>FOR DESKTOP</p></div><h3>Tau Omega</h3><p>Local card companion for planning, syncing, verifying and understanding the library your Pocket will see.</p><div class="release-version"><span data-omega-version>v0.3.0</span><span>MACOS / APP ZIP</span></div><div class="release-actions"><a class="button button-outline" data-omega-download href="./downloads/tau-omega_0.3.0_macos-arm64.zip" download>Download Omega <span>↓</span></a><a class="release-link" data-omega-release href="https://github.com/alfatreze/Tau-Omega/releases" target="_blank" rel="noreferrer">All releases <span>↗</span></a></div></article>
       </div>
     </section>
 
@@ -123,7 +123,7 @@ app.innerHTML = `
 
     <section class="built" id="built" aria-labelledby="built-title">
       <p class="eyebrow">BUILT FOR THE CURIOUS</p>
-      <div class="built-grid"><h2 id="built-title">More feeling.<br><em>Less friction.</em></h2><div><p>Tau is a love letter to dedicated listening, but it is not nostalgia software. Under the hood, a RISC-V CPU and FPGA audio path keep playback stable while Tau’s own drawing and meter systems make the little screen feel alive.</p><a class="button button-outline" href="/technical.html">See what makes it tick <span>↗</span></a></div></div>
+      <div class="built-grid"><h2 id="built-title">More feeling.<br><em>Less friction.</em></h2><div><p>Tau is a love letter to dedicated listening, but it is not nostalgia software. Under the hood, a RISC-V CPU and FPGA audio path keep playback stable while Tau’s own drawing and meter systems make the little screen feel alive.</p><a class="button button-outline" href="./technical.html">See what makes it tick <span>↗</span></a></div></div>
       <div class="stat-grid"><div><strong>MP3 + FLAC</strong><span>music, straight from your card</span></div><div><strong>11 METERS</strong><span>movement you can feel</span></div><div><strong>LOCAL FIRST</strong><span>your library stays yours</span></div></div>
     </section>
 

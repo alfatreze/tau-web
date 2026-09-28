@@ -16,6 +16,12 @@ npm run build
 npm run preview
 ```
 
+## Publishing with GitHub Pages
+
+The `main` branch deploys automatically through GitHub Actions. In the repository settings, open **Pages** and set the build and deployment source to **GitHub Actions**. Once the first workflow finishes, the site is available at `https://alfatreze.github.io/tau-web/`.
+
+The build uses relative asset paths so the same bundle can later run at a custom domain such as `tauproject.live` without a path-prefix rebuild. Add a purchased domain in the Pages settings and configure its DNS at the registrar when you're ready.
+
 ## License
 
 Tau Web's original source code and documentation are licensed under the MIT License; see [`LICENSE`](LICENSE). This license does not replace or extend the licenses of third-party assets and software listed below. In particular, the Pocket Sync model assets retain their upstream AGPL-3.0 terms; see [`ATTRIBUTION.md`](ATTRIBUTION.md) before redistributing or hosting them.
